@@ -1,0 +1,22 @@
+{
+  "name": "pullable-event-bus",
+  "version": "0.0.1",
+  "description": "An event bus where emmiters can pull data from susbscribers",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "test": "tsc && ava lib/**/*.spec.js"
+  },
+  "keywords": [
+    "pullable-event-bus",
+    "event-bus",
+    "javascript",
+    "typescript"
+  ],
+  "author": "Carlos Galarza <carloslfu@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "ava": "^1.0.0-beta.3",
+    "typescript": "^2.8.0-dev.20180224"
+  }
+}
