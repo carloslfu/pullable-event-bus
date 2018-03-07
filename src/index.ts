@@ -16,7 +16,23 @@ export interface Subscriptions {
   [eventName: string]: EventSubscriptions
 }
 
-export function makeEventBus () {
+/**
+ * Subscription Descriptor
+ */
+export interface Descriptor extends Array<any> {
+  /** Event Name */
+  0: string
+  /** Sequence Number */
+  1: number
+}
+
+export interface EventBus {
+  on (eventName: string, handler: EventHandler, pullable?: boolean): Descriptor
+  off (descriptor: Descriptor): void
+  emit (eventName: string, data?: any): Promise<any>
+}
+
+export function makeEventBus (): EventBus {
   const state = {
     subs: <Subscriptions> {},
     subSeq: 0,
@@ -24,7 +40,7 @@ export function makeEventBus () {
   }
 
   return {
-    on (eventName: string, handler: EventHandler, pullable?: boolean): [string, number] {
+    on (eventName, handler, pullable) {
       pullable = !!pullable
       if (!state.subs[eventName]) {
         state.subs[eventName] = {}
@@ -37,14 +53,14 @@ export function makeEventBus () {
       state.subSeq++
       return [eventName, seq]
     },
-    off ([eventName, seq]: [string, number]) {
+    off ([eventName, seq]) {
       delete state.subs[eventName][seq]
       if (Object.keys(state.subs[eventName]).length === 0) {
         // Delete empty tables
         delete state.subs[eventName]
       }
     },
-    async emit (eventName: string, data?: any) {
+    async emit (eventName, data) {
       let evSpace = state.subs[eventName]
       if (!evSpace) {
         return
