@@ -26,10 +26,22 @@ export interface Descriptor extends Array<any> {
   1: number
 }
 
+export interface On {
+  (eventName: string, handler: EventHandler, pullable?: boolean): Descriptor
+}
+
+export interface Off {
+  (descriptor: Descriptor): void
+}
+
+export interface Emit {
+  (eventName: string, data?: any): Promise<any>
+}
+
 export interface EventBus {
-  on (eventName: string, handler: EventHandler, pullable?: boolean): Descriptor
-  off (descriptor: Descriptor): void
-  emit (eventName: string, data?: any): Promise<any>
+  on: On
+  off: Off
+  emit: Emit
 }
 
 export function makeEventBus (): EventBus {
