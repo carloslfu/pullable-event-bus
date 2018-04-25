@@ -14,6 +14,10 @@
     "typescript"
   ],
   "author": "Carlos Galarza <carloslfu@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/carloslfu/pullable-event-bus.git"
+  },
   "license": "MIT",
   "files": [
     "lib/",
